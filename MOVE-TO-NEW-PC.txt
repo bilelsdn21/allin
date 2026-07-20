@@ -36,22 +36,36 @@ services):
   tell the user instead of recreating it.
 
 ----------------------------------------------------------------
-1. WHAT THE USER COPIES (checklist for the human)
+1. GETTING THE FILES ON THE NEW PC (checklist for the human)
 ----------------------------------------------------------------
-  [ ] Copy Desktop\code EXCEPT the "khd" folder to the new PC,
-      ideally to the SAME location: C:\Users\<you>\Desktop\code
-      (same place = Claude's project memory keeps working).
-  [ ] ALSO copy this folder from the old PC (Claude's memory -
-      it is NOT inside Desktop\code):
-        C:\Users\<old-user>\.claude\projects\c--Users-user-Desktop-code\
-      to the same path on the new PC (adjust <user> part; the
-      folder name must match the new path of the code folder -
-      if unsure, just copy it anywhere and tell Claude where).
-  [ ] Install Python 3.11+ on the new PC (Microsoft Store
-      version is fine - that is what the old PC used).
+All CODE is on GitHub (account bilelsdn21). All CLIENT DATA is
+NOT on GitHub on purpose (privacy) - it travels on a USB stick.
+
+  [ ] Install git (git-scm.com) and Python 3.11+ (Microsoft
+      Store) on the new PC.
+  [ ] Open a terminal on the Desktop and clone the code:
+        git clone https://github.com/bilelsdn21/allin.git code
+        cd code
+        git clone https://github.com/bilelsdn21/busmov.git "BUS PROJECT"
+        cd "BUS PROJECT"
+        git clone https://github.com/bilelsdn21/bus-app-web.git bus-app-web
+        cd ..
+        git clone https://github.com/bilelsdn21/seeplaces.git "see placess"
+  [ ] From the USB stick, copy the DATA into the same places:
+        check passport\  -> images folder, the ARRIVEE .xls
+                            list, (optional) output, runs,
+                            decisions.csv
+        BUS PROJECT\     -> the .xlsm files, data, input,
+                            backups, _archive folders
+        see placess\     -> history.db  (IMPORTANT - live data)
+                            and the .xlsx report files
   [ ] Double-click SETUP.bat in the code folder - it installs
       everything the projects need, and ONLY what is missing.
       (You can do this before Claude is even installed.)
+  [ ] OPTIONAL but recommended - Claude's memory (not in git,
+      not on the USB unless you copy it): copy
+        C:\Users\<old-user>\.claude\projects\c--Users-user-Desktop-code\
+      from the old PC to the same path on the new one.
   [ ] Install Claude Code, open the new Desktop\code folder.
 
 ----------------------------------------------------------------
