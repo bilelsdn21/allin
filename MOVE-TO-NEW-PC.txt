@@ -1,0 +1,152 @@
+================================================================
+ MOVE KIT - Desktop\code  ->  new PC
+================================================================
+Owner note: after moving, open Claude Code in the new "code"
+folder and say:
+
+    "Read MOVE-TO-NEW-PC.txt and do what it says."
+
+Claude: everything below this line is for you. Follow it in
+order, verify each step, and report what passed/failed in plain
+words. The user is not technical - never leave something
+half-working without saying so clearly.
+
+----------------------------------------------------------------
+0. WHAT THIS FOLDER IS
+----------------------------------------------------------------
+Three independent projects (all free tools only - never add paid
+services):
+
+  1) "check passport"  - Tkinter desktop app. Stamps client ID
+     numbers (or their Excel list number as fallback) onto
+     passport photos, matches photos against an Excel name list,
+     produces report.xlsx (bilingual EN/FR). Entry points:
+     app.py (GUI), passport_check.py (CLI), split_pdfs.py
+     (multi-passport PDFs -> images). Launched via
+     "Passport Check.bat" or a desktop shortcut.
+
+  2) "BUS PROJECT"     - Streamlit app (app.py) + export.py,
+     works on the .xlsm files in the folder.
+
+  3) "see placess"     - Flask app (app.py) + report/reconcile
+     scripts + seeplaces_downloader.py (Selenium). history.db
+     is live data - it must travel with the folder.
+
+  The folder "khd" is NOT moved - if a script references it,
+  tell the user instead of recreating it.
+
+----------------------------------------------------------------
+1. WHAT THE USER COPIES (checklist for the human)
+----------------------------------------------------------------
+  [ ] Copy Desktop\code EXCEPT the "khd" folder to the new PC,
+      ideally to the SAME location: C:\Users\<you>\Desktop\code
+      (same place = Claude's project memory keeps working).
+  [ ] ALSO copy this folder from the old PC (Claude's memory -
+      it is NOT inside Desktop\code):
+        C:\Users\<old-user>\.claude\projects\c--Users-user-Desktop-code\
+      to the same path on the new PC (adjust <user> part; the
+      folder name must match the new path of the code folder -
+      if unsure, just copy it anywhere and tell Claude where).
+  [ ] Install Python 3.11+ on the new PC (Microsoft Store
+      version is fine - that is what the old PC used).
+  [ ] Double-click SETUP.bat in the code folder - it installs
+      everything the projects need, and ONLY what is missing.
+      (You can do this before Claude is even installed.)
+  [ ] Install Claude Code, open the new Desktop\code folder.
+
+----------------------------------------------------------------
+2. CLAUDE: ENVIRONMENT SETUP  (mostly automatic)
+----------------------------------------------------------------
+2.1  Run the setup checker that travels with this folder:
+
+       SETUP.bat            (user can just double-click it)
+       - or -
+       python setup_check.py
+
+     It checks Python/tkinter/pythonw/Chrome and every library
+     all 3 projects need, and installs ONLY what is missing
+     (never reinstalls what is already there - no wasted time,
+     memory, or prompts). It ends with a PASS/FAIL report.
+     Run it FIRST and only fix by hand what it flags:
+
+       - "Python is NOT installed"  -> user installs Python 3.11+
+         from the Microsoft Store, then runs SETUP.bat again.
+       - "tkinter" missing          -> reinstall Python with the
+         tcl/tk option ticked (pip cannot fix this).
+       - "pip install failed"       -> check internet, retry.
+       - "Chrome not found"         -> only needed for the
+         'see placess' downloader; ask the user before
+         installing anything.
+
+     To re-verify without installing:  python setup_check.py --check
+
+2.2  Do NOT run manual pip installs unless setup_check.py
+     failed and you understand why. The list of requirements
+     lives in ONE place: the REQUIREMENTS dict inside
+     setup_check.py - update that file if a project gains a
+     new dependency.
+
+----------------------------------------------------------------
+3. CLAUDE: PER-PROJECT CHECKS (run these, fix what fails)
+----------------------------------------------------------------
+3.1  check passport
+     cd "check passport"
+     - python -m py_compile app.py passport_check.py split_pdfs.py
+     - python -c "import passport_check as pc; print(pc.__version__)"
+     - Construct the GUI once headless-ish:
+         python -c "import app; a=app.App(); a.update(); a.destroy(); print('GUI OK')"
+     - Folders images/, output/, to_review/, pdfs_split/ are
+       auto-created; config.json travels and may contain an old
+       "window" size - harmless.
+     - RECREATE the desktop shortcut (old one points to the old
+       PC's pythonw path). PowerShell, adjust paths:
+         $ws = New-Object -ComObject WScript.Shell
+         $sc = $ws.CreateShortcut("$([Environment]::GetFolderPath('Desktop'))\Passport Check.lnk")
+         $sc.TargetPath  = "<pythonw.exe path from 2.1>"
+         $sc.Arguments   = '"app.py"'
+         $sc.WorkingDirectory = "<full path to check passport folder>"
+         $sc.IconLocation = "<folder>\app_icon.ico"
+         $sc.Save()
+     - Also fix "Passport Check.bat" if pythonw is not on PATH.
+     - Smoke test with the user: launch, drop one photo + the
+       Excel, click the green button, confirm stats + report.
+
+3.2  BUS PROJECT
+     cd "BUS PROJECT"
+     - python -m py_compile app.py export.py
+     - Its own requirements.txt exists; already covered by 2.2.
+     - Run: python -m streamlit run app.py   (check "UPDATE
+       SITE.bat" for how the user usually starts it - update
+       that .bat if it has old paths).
+
+3.3  see placess
+     cd "see placess"
+     - python -m py_compile app.py guide_report.py history.py reconcile.py seeplaces_downloader.py
+     - Confirm history.db arrived (live data!). If missing, STOP
+       and tell the user before doing anything else.
+     - Run: python app.py  (Flask). Dockerfile/render.yaml are
+       for cloud deploys - ignore locally.
+
+----------------------------------------------------------------
+4. CLAUDE: RULES THE USER ALREADY AGREED ON (do not re-ask)
+----------------------------------------------------------------
+  - Free tools only. No paid APIs/services.
+  - Passport app language is simple English + French.
+  - Never guess which ID belongs to a duplicated name - flag it.
+  - Photos with no passport number in the list get the list
+    number ("No 12") stamped as fallback.
+  - Multi-person PDFs: split to to_review/, the user renames.
+  - Originals in images/ are never modified in place (except
+    the user-confirmed one-click rename); output/ is always
+    rebuilt, report.xlsx is regenerable.
+
+----------------------------------------------------------------
+5. FINAL CHECK
+----------------------------------------------------------------
+Tell the user, in simple words, for each of the 3 projects:
+works / doesn't work / what is missing on this PC.
+If the memory folder from step 1 was copied, confirm you can
+see your notes about these projects; if not, ask the user to
+locate it - this file is only the survival kit, the memory has
+the full history.
+================================================================

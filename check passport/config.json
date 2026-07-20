@@ -1,0 +1,27 @@
+{
+  "_comment": "Edit this file to change how the ID is stamped. After editing, just re-run the script.",
+  "excel_file": "auto",
+  "name_column": "Name",
+  "surname_column": "Surname",
+  "id_column": "Passport no",
+  "index_column": "Index",
+  "images_folder": "images",
+  "output_folder": "output",
+  "skip_pdf": true,
+  "number_output_files": true,
+  "id_text": {
+    "prefix": "ID: ",
+    "show_index": true,
+    "index_prefix": "No ",
+    "position": "bottom-right",
+    "margin_x": 30,
+    "margin_y": 30,
+    "font_size": 48,
+    "font_color": "#000000",
+    "box": true,
+    "box_color": "#FFFFFF",
+    "box_opacity": 200,
+    "box_padding": 14
+  },
+  "window": "1536x793+-80+98"
+}

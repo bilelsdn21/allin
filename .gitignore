@@ -1,0 +1,24 @@
+# --- projects with their OWN GitHub repos (cloned separately) ---
+BUS PROJECT/
+see placess/
+khd/
+
+# --- python junk ---
+__pycache__/
+*.pyc
+
+# --- CLIENT / PERSONAL DATA: never on GitHub, move it by USB ---
+check passport/images/
+check passport/output/
+check passport/to_review/
+check passport/pdfs_split/
+check passport/report*
+check passport/app_errors.log
+*.xls
+*.xlsx
+*.xlsm
+*.XLSX
+
+# run results also contain client names
+check passport/runs/
+check passport/decisions.csv
